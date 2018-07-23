@@ -8,8 +8,19 @@ class InfodolarSpider(scrapy.Spider):
     start_urls = ['https://www.infodolar.com//']
 
     def parse(self, response):
-        cotizaciones = {"results":[]}
-        for table in response.css('[id="ctl00_PlaceHolderLeftColumn_GridViewDolar"]'):
+        cotizaciones = {
+            "dolar": self._parse_table(response, "ctl00_PlaceHolderLeftColumn_GridViewDolar"),
+            "euro": self._parse_table(response, "ctl00_PlaceHolderLeftColumn_GridViewEuro"),
+            "real": self._parse_table(response, "ctl00_PlaceHolderLeftColumn_GridViewReal"),
+            "pesoUruguayo": self._parse_table(response, "ctl00_PlaceHolderLeftColumn_GridViewPesoUruguayo"),
+            "pesoChileno": self._parse_table(response, "ctl00_PlaceHolderLeftColumn_GridViewPesoChileno")
+        }
+        yield cotizaciones
+
+    @staticmethod
+    def _parse_table(response, id):
+        cotizaciones = []
+        for table in response.css('[id="{0}"]'.format(id)):
             for row in table.css('tr'):
                 cells = row.css('td')
                 if cells != []:
@@ -19,5 +30,5 @@ class InfodolarSpider(scrapy.Spider):
                         "venta": cells.css('.colCompraVenta::text').extract()[1].strip(),
                         "update": cells.css('abbr::attr(title)').extract()[0].strip()
                     }
-                    cotizaciones["results"].append(cotizacion)
-            yield cotizaciones
+                    cotizaciones.append(cotizacion)
+        return cotizaciones
