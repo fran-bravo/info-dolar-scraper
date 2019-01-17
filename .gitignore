@@ -1,2 +1,8 @@
 .idea/
 __pycache__/
+bin/
+include/
+lib/
+dolar/*.pyc
+dolar/spiders/*.pyc
+pip-selfcheck.json

@@ -9,11 +9,11 @@ class InfodolarSpider(scrapy.Spider):
 
     def parse(self, response):
         cotizaciones = {
-            "dolar": self._parse_table(response, "ctl00_PlaceHolderLeftColumn_GridViewDolar"),
-            "euro": self._parse_table(response, "ctl00_PlaceHolderLeftColumn_GridViewEuro"),
-            "real": self._parse_table(response, "ctl00_PlaceHolderLeftColumn_GridViewReal"),
-            "pesoUruguayo": self._parse_table(response, "ctl00_PlaceHolderLeftColumn_GridViewPesoUruguayo"),
-            "pesoChileno": self._parse_table(response, "ctl00_PlaceHolderLeftColumn_GridViewPesoChileno")
+            "dolar": self._parse_table(response, "ctl00_PlaceHolderMainContent_GridViewDolar"),
+            "euro": self._parse_table(response, "ctl00_PlaceHolderMainContent_GridViewEuro"),
+            "real": self._parse_table(response, "ctl00_PlaceHolderMainContent_GridViewReal"),
+            "pesoUruguayo": self._parse_table(response, "ctl00_PlaceHolderMainContent_GridViewPesoUruguayo"),
+            "pesoChileno": self._parse_table(response, "ctl00_PlaceHolderMainContent_GridViewPesoChileno")
         }
         yield cotizaciones
 
